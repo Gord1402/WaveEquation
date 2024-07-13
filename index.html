@@ -1,0 +1,67 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wave equation</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="CCapture.all.min.js"></script>
+</head>
+<body>
+    <table class="content">
+        <tr>
+            <td></td>
+            <td>Color bar</td>
+        </tr>
+        <tr>
+            <td>
+                <canvas id ="draw" width="500" height="500"></canvas>
+            </td>
+            <td>
+                <canvas id ="colorbar" width="50" height="500"></canvas>
+            </td>
+        </tr>
+        <tr>
+            <td>Изображение на экране</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                <canvas id ="screen" width="500" height="20"></canvas>
+            </td>
+            <td></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td><button onclick="init()">Запуск</button></td>
+            <td><button onclick="startRecording()" id="record">Запись</button></td>
+            <td><button onclick="stopRecording()" id="stop" hidden>Остановить</button></td>
+            <td><select id="format">
+                <option value="gif">GIF</option>
+                <option value="webm">WEBM</option>
+                <option value="png">PNG Archive</option>
+                <option value="jpg">JPG Archive</option>
+              </select></td>
+        </tr>
+    </table>
+    <p>Начальные условия:</p>
+    <textarea id="pos">
+(x, y) => {
+    // x_lim = [-1, 1]; y_lim = [-1, 1];
+    return 2 * Math.min(1, Math.max(0, 0.3 - Math.sqrt(Math.pow(x,2) + Math.pow(y - 0.5,2) ))) * Math.sin(y * 1000);
+}
+    </textarea>
+
+    <p>Массы:</p>
+    <textarea id="mas">
+// set_mass_line(from, to, value)
+// set_mass(at, value)
+set_mass_line([0, height / 2], [width / 2 - 20, height / 2], infinity);
+set_mass_line([width / 2 - 10, height / 2], [width / 2 + 10, height / 2], infinity);
+set_mass_line([width / 2 + 20, height / 2], [width, height / 2], infinity);
+    </textarea>
+    <button onclick="MakeHref()" id="href">Создать ссылку</button>
+    <textarea id="href_text" readonly> </textarea>
+    <script src="index.js"></script>
+</body>
+</html>

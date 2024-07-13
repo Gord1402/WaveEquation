@@ -1,6 +1,22 @@
-var infinity = 9999;
+const infinity = 9999;
 let recording = false;
 let capturer = null;
+
+let log = console.log;
+
+//starting frame 776 of 776
+function parseConsoleLog() {
+    if ((""+arguments[0]).includes("starting frame")){
+        let numbers = (""+arguments[0]).match(/\b\d+\b/g);
+        document.getElementById("progress-bar").value = Number(numbers[0]) / Number(numbers[1]) * 100;
+    }
+    if ((""+arguments[0]).includes("rendering finished")){
+        document.getElementById("progress-bar").value = 0;
+    }
+    log(...arguments);
+}
+
+console.log = parseConsoleLog;
 
 const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
